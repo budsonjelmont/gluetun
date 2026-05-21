@@ -89,6 +89,9 @@ func (s *Service) Start(ctx context.Context) (runError <-chan error, err error) 
 }
 
 func (s *Service) onNewPorts(ctx context.Context, internalToExternalPorts map[uint16]uint16) (err error) {
+	s.logger.Info(portPairsToString(internalToExternalPorts))
+
+	externalPorts := slices.Collect(maps.Values(internalToExternalPorts))
 	autoRedirectionNeeded := false
 	externalToInternalPorts := make(map[uint16]uint16, len(internalToExternalPorts))
 	for internal, external := range internalToExternalPorts {
@@ -97,12 +100,7 @@ func (s *Service) onNewPorts(ctx context.Context, internalToExternalPorts map[ui
 			autoRedirectionNeeded = true
 		}
 	}
-
-	externalPorts := slices.Collect(maps.Keys(externalToInternalPorts))
 	slices.Sort(externalPorts)
-
-	s.logger.Info(portsToString(externalPorts))
-
 	userRedirectionEnabled := !slices.Equal(s.settings.ListeningPorts, []uint16{0})
 	for i, port := range externalPorts {
 		internalPort := externalToInternalPorts[port]
