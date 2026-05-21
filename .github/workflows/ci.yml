@@ -92,7 +92,7 @@ jobs:
 
   verify-private:
     if: |
-      github.repository == 'qdm12/gluetun' &&
+      github.repository == 'passteque/gluetun' &&
       (
         github.event_name == 'push' ||
         github.event_name == 'release' ||
@@ -163,7 +163,7 @@ jobs:
 
   publish:
     if: |
-      github.repository == 'qdm12/gluetun' &&
+      github.repository == 'passteque/gluetun' &&
       (
         github.event_name == 'push' ||
         github.event_name == 'release' ||
@@ -175,6 +175,7 @@ jobs:
       contents: read
       packages: write
     runs-on: ubuntu-latest
+    environment: secrets
     steps:
       - uses: actions/checkout@v6
 
@@ -209,7 +210,7 @@ jobs:
         with:
           registry: ghcr.io
           username: qdm12
-          password: ${{ github.token }}
+          password: ${{ secrets.GHCR_PAT }}
 
       - name: Short commit
         id: shortcommit
