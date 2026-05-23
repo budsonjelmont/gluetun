@@ -1,7 +1,6 @@
 package iptables
 
 import (
-	"bufio"
 	"context"
 	"fmt"
 	"os/exec"
@@ -97,25 +96,24 @@ func saveData(ctx context.Context, binary string) (data string, err error) {
 		}
 		return "", fmt.Errorf("running %s-save: %w", binary, err)
 	}
-	err = checkData(string(output))
-	if err != nil {
-		return "", fmt.Errorf("checking saved data: %w", err)
-	}
-	return string(output), nil
+	return filterData(output)
 }
 
-func checkData(data string) error {
-	scanner := bufio.NewScanner(strings.NewReader(data))
-	i := 0
-	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.HasPrefix(line, "[unsupported") {
-			return fmt.Errorf("unsupported revision marker found in line %d: %s", i+1, line)
+func filterData(cmdOutput []byte) (filtered string, err error) {
+	lines := strings.Split(string(cmdOutput), "\n")
+	filteredLines := make([]string, 0, len(lines))
+	for _, line := range lines {
+		switch {
+		case strings.HasPrefix(line, ":DOCKER_OUTPUT"),
+			strings.HasPrefix(line, ":DOCKER_POSTROUTING"),
+			strings.HasPrefix(line, "-A DOCKER_OUTPUT"),
+			strings.HasPrefix(line, "-A DOCKER_POSTROUTING"):
+			// Do not touch (aka save and restore) NAT rules added by Docker
+			continue
+		case strings.Contains(line, "[unsupported revision]"):
+			return "", fmt.Errorf("mismatch container iptables-save and kernel: %s", line)
 		}
-		i++
+		filteredLines = append(filteredLines, line)
 	}
-	if scanner.Err() != nil {
-		return fmt.Errorf("scanning data: %w", scanner.Err())
-	}
-	return nil
+	return strings.Join(filteredLines, "\n"), nil
 }
