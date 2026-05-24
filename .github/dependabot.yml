@@ -15,33 +15,6 @@ updates:
     package-ecosystem: "gomod"
     directory: "/"
     schedule:
-      interval: "daily"
-    allow:
-      - dependency-name: "github.com/qdm12/gluetun-servers"
-  - # non important dependencies that do not need to be updated.
-    package-ecosystem: gomod
-    directory: /
-    schedule:
-      interval: "quarterly"
-    allow:
-      - dependency-name: "github.com/breml/rootcerts"
-      - dependency-name: "github.com/fatih/color"
-      - dependency-name: "github.com/golang/mock"
-      - dependency-name: "github.com/klauspost/compress"
-      - dependency-name: "github.com/klauspost/pgzip"
-      - dependency-name: "github.com/pelletier/go-toml/v2"
-      - dependency-name: "github.com/qdm12/goshutdown"
-      - dependency-name: "github.com/qdm12/gosplash"
-      - dependency-name: "github.com/qdm12/gotree"
-      - dependency-name: "github.com/qdm12/log"
-      - dependency-name: "github.com/stretchr/testify"
-      - dependency-name: "github.com/ulikunitz/xz"
-      - dependency-name: "gopkg.in/ini.v1"
-  - # The rest of Go modules are important and should be checked every week,
-    # instead of daily, to give a bit of time to avoid supply chain attacks.
-    package-ecosystem: gomod
-    directory: /
-    schedule:
       interval: "weekly"
     ignore:
       - # In particular avoid amneziawg-go which have v1.x.y versions available
@@ -50,17 +23,19 @@ updates:
         # maintainers, which is persisted on the Go proxy.
         dependency-name: "github.com/amnezia-vpn/amneziawg-go"
         versions: ["1.x"]
-      - dependency-name: "github.com/qdm12/gluetun-servers"
-      - dependency-name: "github.com/breml/rootcerts"
-      - dependency-name: "github.com/fatih/color"
-      - dependency-name: "github.com/golang/mock"
-      - dependency-name: "github.com/klauspost/compress"
-      - dependency-name: "github.com/klauspost/pgzip"
-      - dependency-name: "github.com/pelletier/go-toml/v2"
-      - dependency-name: "github.com/qdm12/goshutdown"
-      - dependency-name: "github.com/qdm12/gosplash"
-      - dependency-name: "github.com/qdm12/gotree"
-      - dependency-name: "github.com/qdm12/log"
-      - dependency-name: "github.com/stretchr/testify"
-      - dependency-name: "github.com/ulikunitz/xz"
-      - dependency-name: "gopkg.in/ini.v1"
+    groups:
+      low-importance:
+        patterns:
+          - "github.com/breml/rootcerts"
+          - "github.com/fatih/color"
+          - "github.com/golang/mock"
+          - "github.com/klauspost/compress"
+          - "github.com/klauspost/pgzip"
+          - "github.com/pelletier/go-toml/v2"
+          - "github.com/qdm12/goshutdown"
+          - "github.com/qdm12/gosplash"
+          - "github.com/qdm12/gotree"
+          - "github.com/qdm12/log"
+          - "github.com/stretchr/testify"
+          - "github.com/ulikunitz/xz"
+          - "gopkg.in/ini.v1"
