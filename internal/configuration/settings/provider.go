@@ -48,6 +48,7 @@ func (p *Provider) validate(vpnType string, filterChoicesGetter FilterChoicesGet
 			providers.Fastestvpn,
 			providers.Ivpn,
 			providers.Mullvad,
+			providers.MozillaVPN,
 			providers.Nordvpn,
 			providers.Protonvpn,
 			providers.Surfshark,

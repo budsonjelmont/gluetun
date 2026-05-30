@@ -131,6 +131,8 @@ func getMarkdownHeaders(vpnProvider string) (headers []string, err error) {
 		return []string{countryHeader, cityHeader, ispHeader, hostnameHeader, vpnHeader, tcpHeader, udpHeader}, nil
 	case providers.Mullvad:
 		return []string{countryHeader, cityHeader, ispHeader, ownedHeader, hostnameHeader, vpnHeader}, nil
+	case providers.MozillaVPN:
+		return []string{countryHeader, cityHeader, hostnameHeader, vpnHeader}, nil
 	case providers.Nordvpn:
 		return []string{countryHeader, regionHeader, cityHeader, hostnameHeader, vpnHeader, categoriesHeader}, nil
 	case providers.Perfectprivacy:
