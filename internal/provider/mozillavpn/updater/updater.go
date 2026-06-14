@@ -31,7 +31,7 @@ type relayList struct {
 			Country    string `json:"country"`
 			Ipv4AddrIn string `json:"ipv4_addr_in"`
 			Ipv6AddrIn string `json:"ipv6_addr_in"`
-			Pubkey     string `json:"pubkey"`
+			Pubkey     string `json:"public_key"`
 			Ports      []int  `json:"ports"`
 		} `json:"relays"`
 	} `json:"wireguard"`
