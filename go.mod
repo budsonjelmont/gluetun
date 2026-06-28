@@ -2,6 +2,8 @@ module github.com/qdm12/gluetun
 
 go 1.25.0
 
+replace github.com/qdm12/gluetun-servers => github.com/budsonjelmont/gluetun-servers v0.0.0-20260614012336-57bb5850895a
+
 require (
 	github.com/ProtonMail/go-srp v0.0.7
 	github.com/amnezia-vpn/amneziawg-go v0.2.16
