@@ -13,8 +13,8 @@ const (
 	HideMyAss             = "hidemyass"
 	Ipvanish              = "ipvanish"
 	Ivpn                  = "ivpn"
-	Mullvad               = "mullvad"
 	MozillaVPN            = "mozillavpn"
+	Mullvad               = "mullvad"
 	Nordvpn               = "nordvpn"
 	Perfectprivacy        = "perfect privacy"
 	Privado               = "privado"
@@ -42,8 +42,8 @@ func All() []string {
 		HideMyAss,
 		Ipvanish,
 		Ivpn,
-		Mullvad,
 		MozillaVPN,
+		Mullvad,
 		Nordvpn,
 		Perfectprivacy,
 		Privado,

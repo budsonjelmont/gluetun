@@ -40,7 +40,7 @@ func (w WireguardSelection) validate(vpnProvider string) (err error) {
 	// Validate EndpointIP
 	switch vpnProvider {
 	case providers.Airvpn, providers.Fastestvpn, providers.Ivpn,
-		providers.Mullvad, providers.MozillaVPN,
+		providers.MozillaVPN, providers.Mullvad,
 		providers.Nordvpn, providers.Protonvpn,
 		providers.Surfshark, providers.Windscribe:
 		// endpoint IP addresses are baked in
@@ -64,13 +64,13 @@ func (w WireguardSelection) validate(vpnProvider string) (err error) {
 		if *w.EndpointPort != 0 {
 			return errors.New("endpoint port is set")
 		}
-	case providers.Airvpn, providers.Ivpn, providers.Mullvad,
-		providers.MozillaVPN, providers.Windscribe:
+	case providers.Airvpn, providers.Ivpn, providers.MozillaVPN,
+		providers.Mullvad, providers.Windscribe:
 		// EndpointPort is optional and can be 0
 		if *w.EndpointPort == 0 {
 			break // no custom endpoint port set
 		}
-		if vpnProvider == providers.Mullvad || vpnProvider == providers.MozillaVPN {
+		if vpnProvider == providers.MozillaVPN || vpnProvider == providers.Mullvad {
 			break // no restriction on custom endpoint port value
 		}
 		var allowed []uint16
@@ -93,8 +93,8 @@ func (w WireguardSelection) validate(vpnProvider string) (err error) {
 
 	// Validate PublicKey
 	switch vpnProvider {
-	case providers.Fastestvpn, providers.Ivpn, providers.Mullvad,
-		providers.MozillaVPN,
+	case providers.Fastestvpn, providers.Ivpn,
+		providers.MozillaVPN, providers.Mullvad,
 		providers.Surfshark, providers.Windscribe:
 		// public keys are baked in
 	case providers.Custom:
