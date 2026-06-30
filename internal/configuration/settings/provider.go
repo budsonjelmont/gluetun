@@ -36,10 +36,12 @@ func (p *Provider) validate(vpnType string, filterChoicesGetter FilterChoicesGet
 	case vpn.OpenVPN:
 		validNames = providers.AllWithCustom()
 		validNames = append(validNames, "pia") // Retro-compatibility
-		// Remove Mullvad since it no longer supports OpenVPN as of January 15th, 2026
-		mullvadIndex := slices.Index(validNames, providers.Mullvad)
-		validNames[mullvadIndex], validNames[len(validNames)-1] = validNames[len(validNames)-1], validNames[mullvadIndex]
-		validNames = validNames[:len(validNames)-1]
+		// Remove providers only supporting Wireguard.
+		for _, provider := range []string{providers.MozillaVPN, providers.Mullvad} {
+			providerIndex := slices.Index(validNames, provider)
+			validNames[providerIndex], validNames[len(validNames)-1] = validNames[len(validNames)-1], validNames[providerIndex]
+			validNames = validNames[:len(validNames)-1]
+		}
 		sort.Strings(validNames)
 	case vpn.Wireguard:
 		validNames = []string{
