@@ -218,7 +218,6 @@ ENV VPN_SERVICE_PROVIDER=pia \
     DNS_CACHING=on \
     DNS_UPSTREAM_IPV6=off \
     BLOCK_MALICIOUS=on \
-    BLOCK_SURVEILLANCE=off \
     BLOCK_ADS=off \
     DNS_UNBLOCK_HOSTNAMES= \
     DNS_REBINDING_PROTECTION_EXEMPT_HOSTNAMES= \
@@ -276,7 +275,7 @@ ENV VPN_SERVICE_PROVIDER=pia \
     PUID=1000 \
     PGID=1000
 ENTRYPOINT ["/gluetun-entrypoint"]
-EXPOSE 8000/tcp 8888/tcp 8388/tcp 8388/udp 1080/tcp
+EXPOSE 8000/tcp 8888/tcp 8388/tcp 8388/udp 1080/tcp 1080/udp
 HEALTHCHECK --interval=5s --timeout=5s --start-period=10s --retries=3 CMD /gluetun-entrypoint healthcheck
 ARG TARGETPLATFORM
 RUN apk add --no-cache --update -l wget && \
